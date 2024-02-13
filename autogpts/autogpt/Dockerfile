@@ -28,6 +28,8 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 ENV PATH="$POETRY_HOME/bin:$PATH"
 RUN poetry config installer.max-workers 10
 
+COPY frontend/ ./frontend/
+
 WORKDIR /app
 COPY pyproject.toml poetry.lock ./
 
@@ -48,6 +50,7 @@ RUN poetry install --no-cache --no-root --without dev \
 ONBUILD COPY autogpt/ ./autogpt
 ONBUILD COPY scripts/ ./scripts
 ONBUILD COPY plugins/ ./plugins
+
 ONBUILD COPY prompt_settings.yaml ./prompt_settings.yaml
 ONBUILD COPY README.md ./README.md
 ONBUILD RUN mkdir ./data
